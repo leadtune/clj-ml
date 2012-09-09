@@ -16,7 +16,7 @@ git clone the project, then run:
 
 ### Installing from Clojars
 
-    [org.clojars.bmabey/clj-ml "0.2.4"]
+    [com.leadtune/clj-ml "0.2.4"]
 
 ### Installing from Maven
 
