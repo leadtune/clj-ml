@@ -130,8 +130,7 @@
   ([dataset vector]
      (make-instance dataset 1 vector))
   ([dataset weight vector]
-     (let [^Instance inst (new Instance
-                     (count vector))]
+     (let [^Instance inst (new Instance (.numAttributes ^ClojureInstances dataset))]
        (do (.setDataset inst dataset)
            (loop [vs vector
                   c 0]
