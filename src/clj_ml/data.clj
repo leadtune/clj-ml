@@ -12,7 +12,7 @@
    that can be transformed using usual Clojure functions like map, reduce, etc."
   (:use [clj-ml utils])
   (:require [clj-ml.filters :as filters])
-  (:import (weka.core Instance Instances FastVector Attribute)
+  (:import (weka.core Instance Instances FastVector Attribute AttributeStats)
            (cljml ClojureInstances)))
 
 (declare dataset-seq)
@@ -335,6 +335,45 @@ If the class is nominal then the string value (not keyword) is returned."
       (if (.isNominal attr) ; This ignores the fact that weka can have date and other attribute types...
         (.stringValue instance pos)
         val))))
+
+(defn- extract-stats [[^Attribute att ^AttributeStats stat]]
+  (let [s {:name          (attr-name att)
+           :intCount      (.intCount stat)
+           :distinctCount (.distinctCount stat)
+           :uniqueCount   (.uniqueCount stat)
+           :totalCount    (.totalCount stat)}
+        n (if-let [num-stat (and (.isNumeric att)
+                                 (.numericStats stat))]
+            {:stdDev (.stdDev num-stat)
+             :min    (.min    num-stat)
+             :max    (.max    num-stat)
+             :mean   (.mean   num-stat)
+             :sum    (.sum    num-stat)
+             :sumSq  (.sumSq  num-stat)})]
+    (conj s n)))
+
+(defn dataset-attribute-stats-at [^Instances dataset index-or-name]
+  (let [attr-idx  (int (dataset-index-attr dataset index-or-name))]
+    (extract-stats [(.attribute      dataset attr-idx)
+                    (.attributeStats dataset attr-idx)])))
+
+(defn instance-attribute-stats-at [^Instance instance index-or-name]
+  (dataset-attribute-stats-at (.dataset instance) index-or-name))
+
+(defn attribute-stats-at
+  "Returns attribute statistics situated at the provided position or the provided name."
+  [dataset-or-instance index-or-name]
+  (if (is-instance? dataset-or-instance)
+    (instance-attribute-stats-at dataset-or-instance index-or-name)
+    (dataset-attribute-stats-at dataset-or-instance index-or-name)))
+
+(defn dataset-attributes-stats
+  "Returns a sequence of the dataset attributes(weka.core.Attribute) statistics."
+  [^Instances dataset]
+  (let [idxs          (range (.numAttributes dataset))
+        atts          (map #(vector (.attribute dataset (int %))
+                                    (.attributeStats dataset (int %))) idxs)]
+    (map extract-stats atts)))
 
 (defn instance-to-list
   "Builds a list with the values of the instance"

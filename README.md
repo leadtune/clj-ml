@@ -76,6 +76,36 @@ API documenation can be found [here](http://antoniogarrote.github.com/clj-ml/ind
     12,34,good
     24,53,bad>
 
+    REPL>;Get the summary information on an the values that appear in a dataset
+    REPL> (dataset-attributes-stats ds)
+    REPL>({:stdDev 8.48528137423857,
+    :totalCount 2,
+    :mean 18.0,
+    :name "length",
+    :intCount 2,
+    :sumSq 720.0,
+    :uniqueCount 2,
+    :max 24.0,
+    :min 12.0,
+    :sum 36.0,
+    :distinctCount 2}
+    {:stdDev 13.435028842544403,
+    :totalCount 2,
+    :mean 43.5,
+    :name "width",
+    :intCount 2,
+    :sumSq 3965.0,
+    :uniqueCount 2,
+    :max 53.0,
+    :min 34.0,
+    :sum 87.0,
+    :distinctCount 2}
+    {:name "kind",
+    :intCount 2,
+    :distinctCount 2,
+    :uniqueCount 2,
+    :totalCount 2})
+
     REPL>; Using datasets like sequences
     REPL>(dataset-seq ds)
 
