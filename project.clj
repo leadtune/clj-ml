@@ -4,9 +4,9 @@
                  "stuart" "http://stuartsierra.com/maven2"}
   :java-source-paths ["src/java"]
   :warn-on-reflection true
-  :dependencies [[org.clojure/clojure "1.3.0"]
-                 [incanter/incanter-core "1.3.0"]
-                 [incanter/incanter-charts "1.3.0"]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [incanter/incanter-core "1.4.1"]
+                 [incanter/incanter-charts "1.4.1"]
                  [cs.waikato.ac.nz/weka "3.6.3"]
                  [hr.irb/fastRandomForest "0.98"]]
   :profiles {:dev
