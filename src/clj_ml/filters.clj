@@ -85,7 +85,18 @@
           (check-option-values m {:number-bins "-B"
                                   :weight-bins "-M"}))))
 
+
 (deffilter unsupervised-discretize)
+
+
+(defmethod make-filter-options :pki-unsupervised-discretize
+  ([kind m]
+     (->> (extract-attributes m)
+          (check-options m {:unset-class "-unset-class-temporarily"
+                            :binary "-D"}))))
+
+
+(deffilter pki-unsupervised-discretize)
 
 (defmethod make-filter-options :supervised-nominal-to-binary
   ([kind m]
@@ -180,6 +191,7 @@
   "Mapping of cjl-ml keywords to actual Weka classes"
   {:supervised-discretize weka.filters.supervised.attribute.Discretize
    :unsupervised-discretize weka.filters.unsupervised.attribute.Discretize
+   :pki-unsupervised-discretize weka.filters.unsupervised.attribute.PKIDiscretize
    :supervised-nominal-to-binary weka.filters.supervised.attribute.NominalToBinary
    :unsupervised-nominal-to-binary weka.filters.unsupervised.attribute.NominalToBinary
    :numeric-to-nominal weka.filters.unsupervised.attribute.NumericToNominal
@@ -199,6 +211,7 @@
 
      - :supervised-discretize
      - :unsupervised-discretize
+     - :pki-unsupervised-discretize
      - :supervised-nominal-to-binary
      - :unsupervised-nominal-to-binary
      - :numeric-to-nominal
@@ -245,7 +258,7 @@
     * :unsupervised-discretize
 
       Unsupervised version of the discretize filter. Discretization is by simple
-      pinning.
+      binning.
 
       Parameters:
 
@@ -265,6 +278,22 @@
         - :number-bins
             Defines the number of bins to divide the numeric attributes into
             sample value: 3
+
+
+    * :pki-unsupervised-discretize
+
+      Discretizes numeric attributes using equal frequency binning, where the number of bins is
+      equal to the square root of the number of non-missing values.
+
+      Parameters:
+
+        - :attributes
+            Index of the attributes to be discretized, sample value: [0,4,6]
+            The attributes may also be specified by names as well: [:some-name, \"another-name\"]
+        - :unset-class
+            Does not take class attribute into account for the application
+            of the filter, sample-value: true
+        - :binary
 
     * :supervised-nominal-to-binary
 
