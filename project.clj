@@ -1,10 +1,10 @@
-(defproject com.leadtune/clj-ml "0.2.5"
+(defproject com.leadtune/clj-ml "0.2.6"
   :description "Machine Learning library for Clojure built around Weka and friends"
   :repositories {"leadtune-repo" "http://utility.leadtune.com:8081/nexus/content/repositories/thirdparty/"
                  "stuart" "http://stuartsierra.com/maven2"}
   :java-source-paths ["src/java"]
   :warn-on-reflection true
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [incanter/incanter-core "1.4.1"]
                  [incanter/incanter-charts "1.4.1"]
                  [cs.waikato.ac.nz/weka "3.6.3"]

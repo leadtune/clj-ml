@@ -1,5 +1,9 @@
 # clj-ml History
 
+## v0.2.6 - 2013-06-04
+
+ * Upgraaded to clojure 1.5.1.
+
 ## v0.2.5 - 2013-01-04
 
  * Upgraaded to clojure 1.4 and lein2.
