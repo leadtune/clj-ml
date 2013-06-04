@@ -11,7 +11,7 @@
 (deftest make-clusterers-options-expectation-maximization
   (fact
     (let [options (vec (make-clusterer-options :expectation-maximization {:number-clusters 3 :maximum-iterations 10 :minimum-standard-deviation 0.001 :random-seed 30}))]
-      options => (just ["" "-N" "3" "-I" "10" "-M" "0.0010" "-S" "30"] :in-any-order))))
+      options => (just ["" "-N" "3" "-I" "10" "-M" "0.001" "-S" "30"] :in-any-order))))
 
 
 (deftest make-and-build-clusterer
