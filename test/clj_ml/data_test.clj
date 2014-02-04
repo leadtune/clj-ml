@@ -166,6 +166,25 @@
     (is (= [(.attribute ds 0) (.attribute ds 1)]  (numeric-attributes ds)))
     (is (= '(:a :b :c) (attribute-names ds)))))
 
+(deftest attributes-stats-tests
+  (let [ds (make-dataset "test-statistics" [:num-a {:categoric [:a :b :c]}]
+                         [[10 :a]
+                          [8  :b]
+                          [5  :b]
+                          [3  :c]
+                          [2  :c]
+                          [1  :c]])
+        attr-stats (dataset-attributes-stats ds)]
+    (is (= attr-stats (list {:stdDev 3.5449494589721118  :totalCount 6
+                             :mean   4.833333333333333   :name "num-a"
+                             :intCount 6                 :sumSq 203.0
+                             :uniqueCount 6              :max 10.0
+                             :min 1.0                    :sum 29.0
+                             :distinctCount 6}
+                            {:name "categoric"           :intCount 6
+                             :distinctCount 3            :uniqueCount 1
+                             :totalCount 6})))))
+
 (deftest replacing-attributes
   (let [ds (make-dataset "test" [:a {:b [:foo :bar]}] [[1 :foo] [2 :bar]])
         _ (dataset-replace-attribute! ds :b (nominal-attribute :b [:baz :shaz]))]
